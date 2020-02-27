@@ -102,6 +102,36 @@ class AuthenticationApi {
                 throw new Error(error);
             }
         });
+        /**
+         * Get Access Key for this account
+         * @returns
+         */
+        this.getAccessKeys = () => tslib_1.__awaiter(this, void 0, void 0, function* () {
+            try {
+                const token = yield this.credentialsManager.getAccessToken();
+                const getAccessKeyResponse = yield this.authApiClient.accessKeysGet({}, {}, headers_1.getAuthorizationHeaders(token));
+                return getAccessKeyResponse;
+            }
+            catch (error) {
+                throw new Error(error);
+            }
+        });
+        /**
+         * Deletes Access Key
+         *
+         * @param {string} id
+         * @returns
+         */
+        this.deleteAccessKey = (id) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+            try {
+                const token = yield this.credentialsManager.getAccessToken();
+                const deleteAccessKeyResponse = yield this.authApiClient.accessKeysIdDelete({ id }, {}, headers_1.getAuthorizationHeaders(token));
+                return deleteAccessKeyResponse;
+            }
+            catch (error) {
+                throw new Error(error);
+            }
+        });
         this.credentialsManager = credentialsManager;
         this.authApiClient = security_authn_sdk_1.apigClientFactory.newClient();
     }

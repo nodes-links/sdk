@@ -135,6 +135,7 @@ class RawDataApi {
                 yield upload_1.uploadToS3(url, fields, zipContent);
                 // 5. Start Models
                 yield this.startModels(projectRef, versionRef);
+                return versionRef;
             }
             catch (error) {
                 throw new Error(error);

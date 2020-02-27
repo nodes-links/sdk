@@ -63,4 +63,16 @@ export declare class AuthenticationApi {
      * @returns
      */
     createAccessKey: () => Promise<any>;
+    /**
+     * Get Access Key for this account
+     * @returns
+     */
+    getAccessKeys: () => Promise<any>;
+    /**
+     * Deletes Access Key
+     *
+     * @param {string} id
+     * @returns
+     */
+    deleteAccessKey: (id: string) => Promise<any>;
 }
