@@ -91,7 +91,7 @@ class RawDataApi {
          * @param {string} filePath
          * @memberof RawDataApi
          */
-        this.uploadXer = (filePath, projectRef, versionDescription) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+        this.uploadXer = (filePath, projectRef, versionDescription = 'new version', projectVersionRef) => tslib_1.__awaiter(this, void 0, void 0, function* () {
             const NOT_XER_ERROR = `Unable to process selected file, please select a .xer file`;
             try {
                 if (fs.existsSync(filePath)) {
@@ -126,7 +126,9 @@ class RawDataApi {
                 // 1. Parsing Data Completed
                 yield this.primaveraEvents.parsingResultsCompleted.pipe(operators_1.first()).toPromise();
                 // 2. Create new project version
-                const versionRef = yield this.projectsApi.createVersion(projectRef, versionDescription);
+                const versionRef = projectVersionRef
+                    ? projectVersionRef
+                    : yield this.projectsApi.createVersion(projectRef, versionDescription);
                 // 2. Get signedUrl
                 const { url, fields } = yield this.getSignedUrl(versionRef);
                 // 3. Zip

@@ -51,5 +51,5 @@ export declare class RawDataApi {
      * @param {string} filePath
      * @memberof RawDataApi
      */
-    uploadXer: (filePath: string, projectRef: any, versionDescription: string) => Promise<any>;
+    uploadXer: (filePath: string, projectRef: any, versionDescription?: string, projectVersionRef?: string) => Promise<any>;
 }
