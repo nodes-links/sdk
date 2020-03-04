@@ -30,7 +30,7 @@ const getHeaders = form => {
  * @param {*} stream
  * @returns
  */
-exports.uploadToS3 = (url, fields, stream) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+exports.uploadToS3 = (url, fields, stream) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const form = new FormData();
     form.append('acl', 'public-read');
     // tslint:disable-next-line: forin

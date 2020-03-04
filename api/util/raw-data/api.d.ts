@@ -46,10 +46,24 @@ export declare class RawDataApi {
      */
     uploadRawData: (projectRef: any, versionRef: any, inDir: string) => Promise<void>;
     /**
+     * Parse .xer File.
+     *
+     * @param {string} filePath
+     * @memberof RawDataApi
+     */
+    parseXer: (filePath: string) => Promise<void>;
+    /**
      * Uploads .xer File,  Creates new version and start models
      *
      * @param {string} filePath
      * @memberof RawDataApi
      */
     uploadXer: (filePath: string, projectRef: any, versionDescription?: string, projectVersionRef?: string) => Promise<any>;
+    /**
+     * Covert .xer File to zip of csv's
+     *
+     * @param {string} filePath
+     * @memberof RawDataApi
+     */
+    convertXerToZip: (filePath: string) => Promise<void>;
 }

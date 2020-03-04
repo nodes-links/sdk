@@ -11,7 +11,7 @@ const JSZip = require('jszip');
  *
  * @returns
  */
-exports.zipFiles = (inDir) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+exports.zipFiles = (inDir) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const files = fs.readdirSync(inDir);
     const zip = new JSZip();
     files.forEach(filename => {
@@ -22,7 +22,7 @@ exports.zipFiles = (inDir) => tslib_1.__awaiter(this, void 0, void 0, function* 
         zip.file(newFileName, content);
     });
     const zipContent = yield new Promise(res => {
-        zip.generateAsync({ type: 'nodebuffer' }).then((content) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+        zip.generateAsync({ type: 'nodebuffer' }).then((content) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
             res(content);
         }));
     });

@@ -86,12 +86,12 @@ class RawDataApi {
             }
         });
         /**
-         * Uploads .xer File,  Creates new version and start models
+         * Parse .xer File.
          *
          * @param {string} filePath
          * @memberof RawDataApi
          */
-        this.uploadXer = (filePath, projectRef, versionDescription = 'new version', projectVersionRef) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+        this.parseXer = (filePath) => tslib_1.__awaiter(this, void 0, void 0, function* () {
             const NOT_XER_ERROR = `Unable to process selected file, please select a .xer file`;
             try {
                 if (fs.existsSync(filePath)) {
@@ -110,10 +110,10 @@ class RawDataApi {
                     });
                     this.tableConfigService.tables = new Promise((resolve, reject) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                         try {
-                            if (this.tableConfigService._tables)
-                                resolve(this.tableConfigService._tables);
-                            this.tableConfigService._tables = yield this.getPrimaveraTables();
-                            resolve(this.tableConfigService._tables);
+                            // if (this.tableConfigService._tables) resolve(this.tableConfigService._tables);
+                            // this.tableConfigService._tables = await this.getPrimaveraTables();
+                            // resolve(this.tableConfigService._tables);
+                            resolve(null);
                         }
                         catch (error) {
                             reject(error);
@@ -125,6 +125,21 @@ class RawDataApi {
                 }
                 // 1. Parsing Data Completed
                 yield this.primaveraEvents.parsingResultsCompleted.pipe(operators_1.first()).toPromise();
+            }
+            catch (error) {
+                throw new Error(error);
+            }
+        });
+        /**
+         * Uploads .xer File,  Creates new version and start models
+         *
+         * @param {string} filePath
+         * @memberof RawDataApi
+         */
+        this.uploadXer = (filePath, projectRef, versionDescription = 'new version', projectVersionRef) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+            try {
+                // 1. Parse Xer
+                yield this.parseXer(filePath);
                 // 2. Create new project version
                 const versionRef = projectVersionRef
                     ? projectVersionRef
@@ -138,6 +153,24 @@ class RawDataApi {
                 // 5. Start Models
                 yield this.startModels(projectRef, versionRef);
                 return versionRef;
+            }
+            catch (error) {
+                throw new Error(error);
+            }
+        });
+        /**
+         * Covert .xer File to zip of csv's
+         *
+         * @param {string} filePath
+         * @memberof RawDataApi
+         */
+        this.convertXerToZip = (filePath) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+            try {
+                // 1. Parse Xer
+                yield this.parseXer(filePath);
+                // 3. Zip
+                const zipContent = yield this.zipService.generateZip(false, false, 'nodebuffer');
+                fs.writeFileSync(filePath.replace('.xer', '.zip'), zipContent);
             }
             catch (error) {
                 throw new Error(error);
